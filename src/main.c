@@ -87,10 +87,10 @@ int main(int argc, char **argv){
   /*walk around a tree*/
   i_tree = 100;
   for(i_tree=0;i_tree<n_tree;i_tree++){
-  fprintf(stdout, "Started to fill the descendent index\n");
-  fill_descendant_index(tree_index[i_tree], n_halos_per_tree[i_tree]);
-  fprintf(stdout, "Walking around tree %d\n", i_tree);
-  walk_tree(tree_index[i_tree],0,n_halos_per_tree[i_tree]);
+    fprintf(stdout, "Started to fill the descendent index\n");
+    fill_descendant_index(tree_index[i_tree], n_halos_per_tree[i_tree]);
+    fprintf(stdout, "Walking around tree %d\n", i_tree);
+    walk_tree(tree_index[i_tree],0,n_halos_per_tree[i_tree]);
   }
   return 0;
 }
@@ -124,7 +124,6 @@ void find_index(long **tree, int n_halos_per_tree, long ID, int *index, int ID_C
 	i++;
       }
     }while(!found && i<n_halos_per_tree);
-
   }
   if(found==0){
     fprintf(stderr, "The index is not present in the array");
@@ -146,6 +145,7 @@ void walk_tree(long **tree, int index_start, int n_nodes){
   long *prog_list;
   fprintf(stdout, "Started going around %d nodes\n",n_nodes);  
   prog_list = NULL;
+
   /*allocate the array checking whether the halo as been visited*/
   if(!(visited=malloc(n_nodes * sizeof(int)))){
     fprintf(stderr, "error in the allocation\n");
@@ -158,13 +158,14 @@ void walk_tree(long **tree, int index_start, int n_nodes){
     exit(1);
   }
 
+  /*initalizatoin*/
   for(i=0;i<n_nodes;i++){
     visited[i] = 0;
     ordered[i] = -1;
   }
 
 
-  /*make first the links */
+  /*make the links first */
   i_node = 1;
   my_index = index_start;
 
@@ -182,6 +183,7 @@ void walk_tree(long **tree, int index_start, int n_nodes){
 #endif
 
   }while(i_node<n_nodes);
+
   visited[my_index] +=1;
   ordered[i_node] = my_index;
 
@@ -212,12 +214,12 @@ void find_next_to_visit(int base_index, long **tree, int *visited,int n_nodes,  
 }
 
   do{
-  /* find the main progenitor */
-  prog_index_list = make_progenitor_index_list(base_index, tree, n_nodes);  
-  locate_main_prog(prog_index_list, tree, &main_prog_index, visited);
-
-  /* find the descendant */
-  descendant_index = (int)(tree[base_index][TREE_DESC_INDEX]);
+    /* find the main progenitor */
+    prog_index_list = make_progenitor_index_list(base_index, tree, n_nodes);  
+    locate_main_prog(prog_index_list, tree, &main_prog_index, visited);
+    
+    /* find the descendant */
+    descendant_index = (int)(tree[base_index][TREE_DESC_INDEX]);
 #ifdef DEBUG
   fprintf(stdout, "(ID Desc %d) Descendant %d - Parent %d\n", (int)(tree[base_index][TREE_DESC_ID]),descendant_index, main_prog_index);
 #endif
