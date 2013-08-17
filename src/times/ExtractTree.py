@@ -75,7 +75,7 @@ COL_SPIN = 26
 
 out = open(condensed_tree_file, 'w')
 out.write("# tree_ID(0) host_halo_ID(1) BDM_ID(2) SNAP_NUMP(3) MASS(4) AEXP_LAST_MM(5) AEXP_FORMATION(6)")
-out.write("# POS_X(7) POS_Y(8) POS_Z(9) VEL_X(10) VEL_Y(11) VEL_Z(12) SPIN(13)\n")
+out.write(" POS_X(7) POS_Y(8) POS_Z(9) VEL_X(10) VEL_Y(11) VEL_Z(12) SPIN(13)\n")
 #this selects all the halos inside a tree
 for tree_ID in unique_tree_root_ID:
 #for i in range(10):
